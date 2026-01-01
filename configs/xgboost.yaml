@@ -1,0 +1,25 @@
+# XGBoost-specific configuration
+# Optimized parameters for XGBoost fraud detection
+
+# Inherit from default config
+defaults:
+  - default
+
+# Override model-specific parameters
+models:
+  xgboost:
+    n_estimators: 200
+    max_depth: 8
+    learning_rate: 0.05
+    subsample: 0.9
+    colsample_bytree: 0.9
+    reg_alpha: 0.1
+    reg_lambda: 1.0
+    min_child_weight: 3
+    gamma: 0.1
+    scale_pos_weight: 9  # Handle class imbalance (90% normal, 10% fraud)
+
+# Training parameters optimized for XGBoost
+training:
+  early_stopping: 20
+  validation_frequency: 10

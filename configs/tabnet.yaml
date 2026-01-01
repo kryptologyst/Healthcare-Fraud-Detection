@@ -1,0 +1,29 @@
+# TabNet-specific configuration
+# Optimized parameters for deep tabular neural network
+
+# Inherit from default config
+defaults:
+  - default
+
+# Override model-specific parameters
+models:
+  tabnet:
+    input_dim: null  # Will be set automatically
+    output_dim: 2
+    n_d: 16
+    n_a: 16
+    n_steps: 5
+    gamma: 2.0
+    n_independent: 3
+    n_shared: 3
+    epsilon: 1e-15
+    seed: 42
+
+# Training parameters optimized for TabNet
+training:
+  batch_size: 64
+  epochs: 200
+  learning_rate: 0.005
+  early_stopping: 30
+  validation_frequency: 5
+  weight_decay: 1e-4

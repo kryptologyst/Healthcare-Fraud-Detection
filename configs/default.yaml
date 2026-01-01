@@ -1,0 +1,107 @@
+# Default configuration for healthcare fraud detection
+# This file contains all default parameters for models, training, and evaluation
+
+# Data configuration
+data:
+  train_split: 0.7
+  val_split: 0.15
+  test_split: 0.15
+  random_seed: 42
+  deidentify: true
+  target_column: "fraud_label"
+  feature_columns: null  # null means auto-detect
+  
+# Training configuration
+training:
+  batch_size: 32
+  epochs: 100
+  learning_rate: 0.01
+  early_stopping: 10
+  validation_frequency: 5
+  save_best_model: true
+  device: "auto"  # auto, cuda, mps, cpu
+
+# Model configurations
+models:
+  isolation_forest:
+    contamination: 0.1
+    n_estimators: 100
+    random_state: 42
+    
+  xgboost:
+    n_estimators: 100
+    max_depth: 6
+    learning_rate: 0.1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    random_state: 42
+    eval_metric: "logloss"
+    
+  lightgbm:
+    n_estimators: 100
+    max_depth: 6
+    learning_rate: 0.1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    random_seed: 42
+    objective: "binary"
+    metric: "binary_logloss"
+    verbose: -1
+    
+  catboost:
+    iterations: 100
+    depth: 6
+    learning_rate: 0.1
+    random_seed: 42
+    loss_function: "Logloss"
+    verbose: false
+    
+  tabnet:
+    input_dim: null  # Will be set automatically
+    output_dim: 2
+    n_d: 8
+    n_a: 8
+    n_steps: 3
+    gamma: 1.5
+    n_independent: 2
+    n_shared: 2
+    epsilon: 1e-15
+    seed: 42
+
+# Evaluation configuration
+evaluation:
+  threshold: 0.5
+  metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+    - "f1_score"
+    - "roc_auc"
+    - "pr_auc"
+    - "brier_score"
+    - "expected_calibration_error"
+  plot_curves: true
+  save_plots: true
+  plot_dir: "assets/plots"
+
+# Explainability configuration
+explainability:
+  shap:
+    max_samples: 1000
+    background_samples: 100
+  lime:
+    num_features: 10
+    num_samples: 5000
+
+# Logging configuration
+logging:
+  level: "INFO"
+  log_file: "logs/training.log"
+  log_format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Output configuration
+output:
+  model_dir: "models"
+  results_dir: "assets/results"
+  plots_dir: "assets/plots"
+  create_dirs: true
